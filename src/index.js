@@ -54,5 +54,6 @@ module.exports = {
     collectionStore: stores.collectionStore,
     userStore: stores.userStore,
     getSpaces,
-    sendTransactions
+    sendTransactions,
+    setAPIKey
 }
