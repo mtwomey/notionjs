@@ -6,6 +6,7 @@ const config = require('config');
 const { BlockStore, CollectionStore, SpaceStore, UserStore } = require('./Store');
 const stores = require('./stores');
 const { CreateBlocks } = require('./Block');
+const helpers = require('./helpers');
 
 stores.blockStore = new BlockStore();
 stores.collectionStore = new CollectionStore();
@@ -55,5 +56,6 @@ module.exports = {
     userStore: stores.userStore,
     getSpaces,
     sendTransactions,
-    setAPIKey
+    setAPIKey,
+    helpers
 }
