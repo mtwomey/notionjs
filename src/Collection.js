@@ -36,7 +36,7 @@ Collection.prototype.requestData = async function () {
     const request = {
         method: 'post',
         url: 'https://www.notion.so/api/v3/queryCollection',
-        headers: config.notionHeaders,
+        headers: Object.assign(config.notionHeaders, {cookie: `token_v2=${process.env.token_v2}`}),
         data
     };
     const results = await axios(request);

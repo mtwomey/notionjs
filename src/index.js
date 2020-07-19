@@ -12,6 +12,10 @@ stores.collectionStore = new CollectionStore();
 stores.spaceStore = new SpaceStore();
 stores.userStore = new UserStore();
 
+function setAPIKey(token_v2) {
+    process.env.token_v2 = token_v2;
+}
+
 async function sendTransactions(transactions) {
     if (transactions.length === 0)
         return;
@@ -23,7 +27,7 @@ async function sendTransactions(transactions) {
     const request = {
         method: 'post',
         url: 'https://www.notion.so/api/v3/saveTransactions',
-        headers: config.notionHeaders,
+        headers: Object.assign(config.notionHeaders, {cookie: `token_v2=${process.env.token_v2}`}),
         data: data
     };
 
@@ -34,7 +38,7 @@ async function getSpaces() {
     const request = {
         method: 'post',
         url: 'https://www.notion.so/api/v3/getSpaces',
-        headers: config.notionHeaders
+        headers: Object.assign(config.notionHeaders, {cookie: `token_v2=${process.env.token_v2}`})
     };
     const results = await axios(request);
     stores.blockStore.add(CreateBlocks(Object.values(Object.values(results.data)[0].block)));
