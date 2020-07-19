@@ -219,8 +219,11 @@ function CreateBlocks (blockData) {
             case 'toggle':
                 newBlock = new ToggleBlock(blockToCreate);
                 break;
+            case 'bookmark':
+                newBlock = new Block(blockToCreate);
+                break;
             default:
-                throw Error(`Error creating new Block, type not recognized`);
+                throw new Error(`Cannot create new Block, block type '${blockToCreate.value.type}' not recognized`);
         }
         return newBlock;
     });
