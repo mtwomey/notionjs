@@ -1,5 +1,5 @@
 'use strict';
-const config = require('config');
+const config = require('../config/default');
 const axios = require('axios');
 const stores = require('./stores');
 

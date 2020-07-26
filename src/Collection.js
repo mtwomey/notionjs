@@ -1,6 +1,6 @@
 'use strict';
 const {DateTime} = require("luxon");
-const config = require('config');
+const config = require('../config/default');
 const axios = require('axios');
 const stores = require('./stores');
 const { CreateBlocks } = require('./Block');

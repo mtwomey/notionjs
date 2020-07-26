@@ -1,8 +1,7 @@
 'use strict';
 const uuid = require('uuid').v4;
 const axios = require('axios');
-process.env["NODE_CONFIG_DIR"] = __dirname + "/../config/";
-const config = require('config');
+const config = require('../config/default');
 const { BlockStore, CollectionStore, SpaceStore, UserStore } = require('./Store');
 const stores = require('./stores');
 const { CreateBlocks } = require('./Block');
