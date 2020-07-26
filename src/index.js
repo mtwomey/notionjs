@@ -1,4 +1,6 @@
 'use strict';
+const sqlite3 = require('sqlite3').verbose();
+const homedir = require('os').homedir();
 const uuid = require('uuid').v4;
 const axios = require('axios');
 const config = require('../config/default');
@@ -14,6 +16,23 @@ stores.userStore = new UserStore();
 
 function setAPIKey(token_v2) {
     process.env.token_v2 = token_v2;
+}
+
+// Get the token from Notion local app electron cookie cache
+async function setAPIKeyFromElectronLocal() {
+    let token_v2;
+    const notionAppDb = new sqlite3.Database(`${homedir}/Library/Application Support/Notion/Cookies`);
+    await new Promise((resolve, reject) => { // Stupid lib doesn't support promises...
+        notionAppDb.all('select name, value from cookies where name=?', ['token_v2'], (err, row) => {
+            try {
+                token_v2 = row["0"].value;
+                setAPIKey(token_v2);
+                resolve();
+            } catch (e) {
+                throw new Error(`Couldn't get token_v2 from local Electron cookie cache`);
+            }
+        });
+    })
 }
 
 async function sendTransactions(transactions) {
@@ -56,5 +75,6 @@ module.exports = {
     getSpaces,
     sendTransactions,
     setAPIKey,
+    setAPIKeyFromElectronLocal,
     helpers
 }
